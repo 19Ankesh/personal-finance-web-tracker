@@ -24,6 +24,7 @@ class Settings(BaseSettings):
     SMTP_USERNAME: str | None = None
     SMTP_PASSWORD: str | None = None
     SMTP_FROM_EMAIL: str | None = None
+    BREVO_API_KEY: str | None = None
     FRONTEND_URL: str = "http://localhost:5173"
 
     model_config = SettingsConfigDict(
