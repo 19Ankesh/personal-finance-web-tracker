@@ -1,28 +1,37 @@
 """
 Security utilities: password hashing and JWT token operations.
-Uses passlib (bcrypt) for hashing and python-jose for JWT.
+Uses native bcrypt for hashing (bypasses passlib compatibility issues in Python 3.12+) and python-jose for JWT.
 """
 from datetime import datetime, timedelta
 from typing import Optional
+import bcrypt
 
 from jose import JWTError, jwt
-from passlib.context import CryptContext
 
 from app.core.config import settings
 
 # ── Password hashing ──────────────────────────────────────────────────────────
 
-_pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
 
 def hash_password(plain_password: str) -> str:
     """Hash a plain-text password using bcrypt."""
-    return _pwd_context.hash(plain_password)
+    pwd_bytes = plain_password.encode("utf-8")
+    # Limit to 72 bytes (bcrypt maximum length spec) to avoid truncation warnings
+    pwd_bytes = pwd_bytes[:72]
+    salt = bcrypt.gensalt()
+    hashed = bcrypt.hashpw(pwd_bytes, salt)
+    return hashed.decode("utf-8")
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Return True if plain_password matches the stored hash."""
-    return _pwd_context.verify(plain_password, hashed_password)
+    try:
+        pwd_bytes = plain_password.encode("utf-8")
+        pwd_bytes = pwd_bytes[:72]
+        hashed_bytes = hashed_password.encode("utf-8")
+        return bcrypt.checkpw(pwd_bytes, hashed_bytes)
+    except Exception:
+        return False
 
 
 # ── JWT tokens ────────────────────────────────────────────────────────────────
