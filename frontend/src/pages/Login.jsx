@@ -93,7 +93,7 @@ export default function Login() {
                 <div className="bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-sm px-4 py-3.5 rounded-xl space-y-2">
                   <p className="font-semibold text-white">Reset Link Sent!</p>
                   <p className="text-xs text-slate-300 leading-relaxed">
-                    If that email is registered, we've sent instructions to reset your password. Please check your inbox (and verify the backend console log if SMTP is not configured).
+                    If that email is registered, we've sent instructions to reset your password. Please check your inbox.
                   </p>
                 </div>
               ) : (
