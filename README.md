@@ -11,7 +11,7 @@ A full-stack personal finance analytics platform for Indian users.
 
 ## Features
 
-- PDF/CSV bank statement import (HDFC, ICICI, SBI, Axis)
+- PDF/CSV bank statement import 
 - Auto-categorization engine with self-learning merchant mappings
 - Voice expense logging (Web Speech API)
 - Interactive dashboard with 4 chart types
@@ -45,9 +45,7 @@ npm install
 npm run dev
 ```
 
-### Demo login
-- Email: `demo@finsense.com`
-- Password: `demo123`
+
 
 ## Project Structure
 
